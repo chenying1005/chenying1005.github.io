@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parker English 怕渴英文 - 學習資源庫</title>
+    <style>
+        /* 基礎重置與變數 */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* 導覽列與頭部 */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* 主要內容區 */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* 搜尋框設計 */
+        .search-container {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .search-container input {
+            width: 100%;
+            max-width: 600px;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            outline: none;
+            transition: border-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .search-container input:focus {
+            border-color: var(--secondary-color);
+        }
+
+        /* 資源庫網格設計 */
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .card .tag {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .card .tag.ielts {
+            background-color: var(--accent-color);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        /* FAQ 手風琴設計 */
+        .faq-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #eee;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            padding: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .faq-question:hover {
+            background-color: #f1f2f6;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background-color: #fafafa;
+            padding: 0 1.5rem;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px; /* 隨內容高度調整 */
+        }
+
+        /* 頁尾 */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Parker English 怕渴英文</h1>
+        <p>專為多益與雅思考生打造的專屬聽力與字彙資源庫</p>
+    </header>
+
+    <main>
+        <section class="search-container">
+            <input type="text" id="searchInput" placeholder="搜尋教材... (例如：行銷、金融、IELTS、聽力)">
+        </section>
+
+        <section>
+            <h2 class="section-title">精選學習資源</h2>
+            <div id="resourceGrid" class="grid">
+                </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">常見問題 FAQ</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">網站提供哪些英語學習教材？</button>
+                    <div class="faq-answer">
+                        <p>本知識庫收錄了由 Parker English 製作的系列教材，主要分為三大類：<br>1. <strong>多益單字 10 min：</strong>涵蓋辦公室科技、企業規劃、金融經濟、行銷、法律等商務主題。<br>2. <strong>IELTS 雅思字彙：</strong>針對學術進程、法律體系、醫療體系、社會結構等進階主題進行分類。<br>3. <strong>TOEIC 高分聽力訓練與模擬試題：</strong>提供 Part 2、Part 3 等完整聽力模擬與解析。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">教材的主題針對哪些族群？</button>
+                    <div class="faq-answer">
+                        <p>教材專為需要考取多益 (TOEIC) 高分以利求職的商務人士，以及準備雅思 (IELTS) 測驗的學術進修者所設計。內容深度涵蓋了如企業合併協議、行銷策略、公司編制以及法庭攻防等專業領域情境，讓備考同時也能增強專業實力。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">聽力教材的特色是什麼？</button>
+                    <div class="faq-answer">
+                        <p>聽力教材如「多益高分聽力訓練」系列，包含美、英、澳等不同口音，並模擬真實的會議、電話錄音、機場廣播等情境。透過大量且密集的 Part 2 與 Part 3 題型訓練，幫助考生習慣考試的語速與連音。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Parker English 怕渴英文 學習資源庫. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // 知識庫資源資料 (擷取自 NotebookLM 文件內容)
+        const resources = [
+            { title: "多益單字 10 min ⎮ 43 Finance & Economy 金融與經濟", type: "TOEIC", desc: "探討通貨膨脹、經濟衰退、投資與貨幣穩定等金融財經核心單字。" },
+            { title: "多益單字 10 min ⎮ 65 Business Planning 業務規劃", type: "TOEIC", desc: "涵蓋專案提案、風險評估、市場分析與資源分配等企劃必備字彙。" },
+            { title: "多益單字 10 min ⎮ 67 Marketing 行銷", type: "TOEIC", desc: "學習廣告活動、目標受眾、市佔率與商品推廣相關的高頻商務單字。" },
+            { title: "多益單字 10 min ⎮ 51 Corporation Organization 企業編制", type: "TOEIC", desc: "了解董事會、人資、總部與子公司等企業階層與行政管理詞彙。" },
+            { title: "IELTS 字彙 ⎮ Unit 34 法律體系 Legal System", type: "IELTS", desc: "針對法庭裁判、強制義務、公平原則與仲裁調解等法政單字進行解析。" },
+            { title: "IELTS 字彙 ⎮ Unit 22 學術體制 Academic System", type: "IELTS", desc: "聚焦於大學入學、高等教育、理論分析與學術研究相關雅思必考詞彙。" },
+            { title: "多益高分聽力訓練 ⎮ 41 ⎮ TOEIC Listening", type: "TOEIC", desc: "涵蓋海外營運擴展、行銷部門廣告活動、以及供應商談判等聽力情境。" },
+            { title: "多益高分聽力訓練 ⎮ 01 ⎮ TOEIC Listening", type: "TOEIC", desc: "包含辦公室日常對話、日程安排變更、以及機器維修等基礎聽力測驗。" },
+            { title: "IELTS 字彙 ⎮ Unit 9 社交互動 Social Interaction", type: "IELTS", desc: "探討人際交流、禮儀、建立信任與專業溝通等社會互動情境用語。" },
+            { title: "多益單字 10 min ⎮ 64 Contracts 契約", type: "TOEIC", desc: "學習租約更新、保密協議、違約責任與條款協商等合約專用字彙。" }
+        ];
+
+        const resourceGrid = document.getElementById('resourceGrid');
+        const searchInput = document.getElementById('searchInput');
+
+        // 渲染資源卡片函式
+        function renderResources(data) {
+            resourceGrid.innerHTML = '';
+            
+            if (data.length === 0) {
+                resourceGrid.innerHTML = '<div class="no-results">找不到符合條件的教材，請嘗試其他關鍵字。</div>';
+                return;
+            }
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                const tagClass = item.type === 'IELTS' ? 'tag ielts' : 'tag';
+                
+                card.innerHTML = `
+                    <span class="${tagClass}">${item.type}</span>
+                    <h3>${item.title}</h3>
+                    <p>${item.desc}</p>
+                `;
+                resourceGrid.appendChild(card);
+            });
+        }
+
+        // 初始化載入所有資源
+        renderResources(resources);
+
+        // 搜尋過濾功能
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredResources = resources.filter(item => 
+                item.title.toLowerCase().includes(searchTerm) || 
+                item.desc.toLowerCase().includes(searchTerm) ||
+                item.type.toLowerCase().includes(searchTerm)
+            );
+            renderResources(filteredResources);
+        });
+
+        // FAQ 手風琴互動功能
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                // 檢查當前是否已開啟
+                const isActive = item.classList.contains('active');
+                
+                // 關閉所有其他項目 (確保一次只開一個)
+                faqItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                });
+
+                // 如果原本不是開啟狀態，則將其開啟
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
